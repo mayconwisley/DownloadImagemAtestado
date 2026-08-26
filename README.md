@@ -69,7 +69,7 @@ DownloadImagemAtestado.exe --numemp <valor> --tipcol <valor> --numcad <valor> --
 Exemplo:
 
 ```bash
-DownloadImagemAtestado.exe --numemp 1 --tipcol 1 --numcad 12345 --local "C:\Atestados" --link "https://s3.amazonaws.com/atestado.app/condor.ind.br/attachments/bc94c05e4e69913ec86dc23825c1b614-17873191746113615917289379782305.jpg" --nomdoc "atestado.jpg"
+DownloadImagemAtestado.exe --numemp 1 --tipcol 1 --numcad 12345 --local "C:\Atestados" --link "https://exemplo.com.br/attachments/arquivo.jpg" --nomdoc "atestado.jpg"
 ```
 
 Resultado: o arquivo é salvo em `C:\Atestados\1-1-12345\atestado.jpg`.
@@ -109,10 +109,10 @@ Caracteres inválidos para nomes de pasta no Windows são substituídos por `_`.
   Exemplo — para o link:
 
   ```
-  https://s3.amazonaws.com/atestado.app/condor.ind.br/attachments/bc94c05e4e69913ec86dc23825c1b614-17873191746113615917289379782305.jpg
+  https://exemplo.com.br/attachments/2f9a6c1d8b3e4a57-1687319174611361591.jpg
   ```
 
-  o arquivo é salvo como `bc94c05e4e69913ec86dc23825c1b614.jpg`.
+  o arquivo é salvo como `2f9a6c1d8b3e4a57.jpg`.
 
   Se a URL não contiver `/attachments/`, o nome cai para o último segmento do caminho da URL como alternativa.
 

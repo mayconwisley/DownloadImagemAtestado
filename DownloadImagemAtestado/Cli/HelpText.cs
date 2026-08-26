@@ -22,7 +22,7 @@ internal static class HelpText
               -h, --help   Exibe esta mensagem
 
             Exemplo:
-              DownloadImagemAtestado --numemp 1 --tipcol 1 --numcad 12345 --local "C:\Atestados" --link "https://s3.amazonaws.com/atestado.app/condor.ind.br/attachments/arquivo.jpg" --nomdoc "atestado.jpg" --quiet
+              DownloadImagemAtestado --numemp 1 --tipcol 1 --numcad 12345 --local "C:\Atestados" --link "https://exemplo.com.br/attachments/arquivo.jpg" --nomdoc "atestado.jpg" --quiet
             """);
     }
 }
