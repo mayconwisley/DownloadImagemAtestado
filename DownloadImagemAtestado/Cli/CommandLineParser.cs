@@ -6,19 +6,22 @@ internal static class CommandLineParser
 
     public static ParseResult Parse(string[] args)
     {
-        if (args.Length == 0 || args.Any(a => a is "-h" or "--help" or "/?"))
+        bool quiet = args.Any(a => a is "-q" or "--quiet");
+        string[] remainingArgs = args.Where(a => a is not ("-q" or "--quiet")).ToArray();
+
+        if (remainingArgs.Length == 0 || remainingArgs.Any(a => a is "-h" or "--help" or "/?"))
         {
-            return ParseResult.Help();
+            return ParseResult.Help(quiet);
         }
 
         var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        for (int i = 0; i < args.Length; i++)
+        for (int i = 0; i < remainingArgs.Length; i++)
         {
-            string arg = args[i];
+            string arg = remainingArgs[i];
             if (!arg.StartsWith("--", StringComparison.Ordinal))
             {
-                return ParseResult.Error($"Argumento invalido: '{arg}'. Use --nome valor.");
+                return ParseResult.Error($"Argumento invalido: '{arg}'. Use --nome valor.", quiet);
             }
 
             string key = arg[2..];
@@ -32,11 +35,11 @@ internal static class CommandLineParser
             }
             else
             {
-                if (i + 1 >= args.Length)
+                if (i + 1 >= remainingArgs.Length)
                 {
-                    return ParseResult.Error($"O parametro '--{key}' requer um valor.");
+                    return ParseResult.Error($"O parametro '--{key}' requer um valor.", quiet);
                 }
-                value = args[++i];
+                value = remainingArgs[++i];
             }
 
             values[key] = value;
@@ -45,13 +48,13 @@ internal static class CommandLineParser
         string[] missing = RequiredKeys.Where(k => !values.ContainsKey(k)).ToArray();
         if (missing.Length > 0)
         {
-            return ParseResult.Error($"Parametros obrigatorios ausentes: {string.Join(", ", missing.Select(m => "--" + m))}");
+            return ParseResult.Error($"Parametros obrigatorios ausentes: {string.Join(", ", missing.Select(m => "--" + m))}", quiet);
         }
 
         if (!Uri.TryCreate(values["link"], UriKind.Absolute, out Uri? link) ||
             (link.Scheme != Uri.UriSchemeHttp && link.Scheme != Uri.UriSchemeHttps))
         {
-            return ParseResult.Error($"O parametro '--link' precisa ser uma URL http(s) valida: '{values["link"]}'");
+            return ParseResult.Error($"O parametro '--link' precisa ser uma URL http(s) valida: '{values["link"]}'", quiet);
         }
 
         var options = new CommandLineOptions(
@@ -62,6 +65,6 @@ internal static class CommandLineParser
             Link: link,
             NomDoc: values.GetValueOrDefault("nomdoc"));
 
-        return ParseResult.Success(options);
+        return ParseResult.Success(options, quiet);
     }
 }

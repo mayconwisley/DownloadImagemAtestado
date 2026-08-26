@@ -5,6 +5,10 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyTitle>DownloadImagemAtestado</AssemblyTitle>
+    <Product>DownloadImagemAtestado</Product>
+    <Description>Baixa o anexo de um atestado a partir de uma URL e organiza o arquivo em pasta por empresa/colaborador.</Description>
   </PropertyGroup>
 
 </Project>
